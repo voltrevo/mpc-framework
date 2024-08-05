@@ -1,0 +1,20 @@
+{
+  "name": "mpc-framework",
+  "version": "0.1.0",
+  "description": "MPC framework supporting a variety of circuit generators and backends",
+  "main": "dist/src/index.js",
+  "scripts": {
+    "build": "rm -rf dist && tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["MPC", "multi", "party", "computation", "pse", "cryptography"],
+  "author": "Andrew Morris",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/voltrevo/mpc-framework.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
