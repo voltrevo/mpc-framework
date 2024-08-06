@@ -30,6 +30,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "ee-typed": "^0.1.0",
     "msgpackr": "^1.11.0",
     "zod": "^3.23.8"
   }
