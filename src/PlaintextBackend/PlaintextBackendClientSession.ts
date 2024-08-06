@@ -1,9 +1,12 @@
+import { pack, unpack } from "msgpackr";
 import Circuit from "../Circuit";
+import defer from "../helpers/defer";
 import { BackendSession, MpcSettings } from "../Protocol";
+import { z } from "zod";
 
 export default class PlaintextBackendClientSession implements BackendSession {
-  outputPromise: Promise<Record<string, unknown>>;
-  inputsReceived = false;
+  outputReceived = defer<Record<string, unknown>>();
+  inputsSent = false;
 
   constructor(
     public circuit: Circuit,
@@ -12,24 +15,35 @@ export default class PlaintextBackendClientSession implements BackendSession {
     public input: Record<string, unknown>,
     public send: (to: string, msg: Uint8Array) => void,
     public hostName: string,
-  ) {
-    this.outputPromise = this.run();
-  }
-
-  async run() {
-    throw new Error('TODO');
-    return {};
-  }
+  ) {}
 
   handleMessage(from: string, msg: Uint8Array): void {
     if (from !== this.hostName) {
       return;
     }
 
-    throw new Error('TODO');
+    const message = unpack(msg);
+
+    if (message === 'ping') {
+      if (!this.inputsSent) {
+        this.send(this.hostName, pack(this.input));
+        this.inputsSent = true;
+      }
+
+      return;
+    }
+
+    const parseResult = z.record(z.unknown()).safeParse(message);
+
+    if (parseResult.success === false) {
+      this.outputReceived.reject(parseResult.error);
+      return;
+    }
+
+    this.outputReceived.resolve(parseResult.data);
   }
 
   output(): Promise<Record<string, unknown>> {
-    throw new Error('TODO');
+    return this.outputReceived.promise;
   }
 }
