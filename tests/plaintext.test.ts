@@ -8,7 +8,7 @@ import assert from "../src/helpers/assert";
 describe('plaintext', () => {
   it('3 + 5', async () => {
     const protocol = new Protocol(
-      aPlusB,
+      await aPlusB(),
       [
         {
           name: 'alice',

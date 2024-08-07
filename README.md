@@ -9,72 +9,62 @@ WIP
 ## Usage
 
 ```sh
-npm install mpc-framework circom-2-arithc mpz-ts
+npm install mpc-framework summon-ts
 ```
 
 ```ts
 import * as mpcf from 'mpc-framework';
-import * as c2a from 'circom-2-arithc';
-import mpz from 'mpz-ts';
+import * as summon from 'summon-ts';
 
-const circuitSrc = {
-  // In a real project you should be able to include these as regular files, but
-  // how those files find their way into this format depends on your build tool.
+async function main() {
+  await summon.init();
 
-  'main.circom': `
-    pragma circom 2.0.0;
+  const circuit = summon.compile('/src/main.ts', {
+    // In a real project you should be able to include these as regular files,
+    // but how those files find their way into this format depends on your build
+    // tool.
 
-    template Adder() {
-        signal input a, b;
-        signal output c;
+    '/src/main.ts': `
+      export default function main(a: number, b: number) {
+        return a + b;
+      }
+    `,
+  });
 
-        c <== a + b;
-    }
+  const mpcSettings = [
+    {
+      name: 'alice',
+      inputs: ['a'],
+      outputs: ['main'],
+    },
+    {
+      name: 'bob',
+      inputs: ['b'],
+      outputs: ['main'],
+    },
+  ];
 
-    component main = Adder();
-  `,
-};
+  const protocol = new mpcf.Protocol(circuit, mpcSettings, mpz);
 
-const circuit = c2a.Circuit.compile(circuitSrc);
+  function send(to: string, msg: Uint8Array) {
+    // implement sending a message to the specified party
+  }
 
-console.log(
-  circuit.eval({
-    a: 3,
-    b: 5,
-  }),
-); // { c: 8 }
+  const session = protocol.join('alice', { a: 3 }, send);
 
-const mpcSettings = [
-  {
-    name: 'alice',
-    inputs: ['a'],
-    outputs: ['c'],
-  },
-  {
-    name: 'bob',
-    inputs: ['b'],
-    outputs: ['c'],
-  },
-];
+  // This is just a hypothetical API for getting external messages
+  onMessageReceived((from: string, msg: Uint8Array) => {
+    // The important part is that you provide the messages to the session like
+    // this
+    session.handleMessage(from, msg);
+  });
 
-const protocol = new mpcf.Protocol(circuit, mpcSettings, mpz);
+  // assume someone else joins as bob and provides { b: 5 }
 
-function send(to: string, msg: Uint8Array) {
-  // implement sending a message to the specified party
+  console.log(await session.output()); // { main: 8 }
 }
 
-const session = protocol.join('alice', { a: 3 }, send);
-
-// This is just a hypothetical API for getting external messages
-onMessageReceived((from: string, msg: Uint8Array) => {
-  // The important part is that you provide the messages to the session like
-  // this
-  session.handleMessage(from, msg);
-});
-
-// assume someone else joins as bob and provides { b: 5 }
-
-console.log(await session.output()); // { c: 8 }
+main().catch(console.error);
 ```
 
 ## Example Project

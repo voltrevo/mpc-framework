@@ -1,24 +1,17 @@
-import { Circuit } from "../../src";
-import blockTrim from "../helpers/blockTrim";
+import * as summon from 'summon-ts';
 
-const aPlusB: Circuit = {
-  bristol: blockTrim(`
-    1 3
-    2 1 1
-    1 1
+import once from "../../src/helpers/once";
 
-    2 1 0 1 2 AAdd
-  `),
-  info: {
-    input_name_to_wire_index: {
-      a: 0,
-      b: 1,
-    },
-    constants: {},
-    output_name_to_wire_index: {
-      c: 2,
-    },
-  },
-};
+const aPlusB = once(async () => {
+  await summon.init();
+
+  return summon.compile('/src/main.ts', {
+    '/src/main.ts': `
+      export default function c(a: number, b: number) {
+        return a + b;
+      }
+    `
+  });
+});
 
 export default aPlusB;
