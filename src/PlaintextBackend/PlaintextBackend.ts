@@ -3,7 +3,7 @@ import { Backend, BackendSession, MpcSettings } from "../Protocol";
 import PlaintextBackendHostSession from "./PlaintextBackendHostSession";
 import PlaintextBackendClientSession from "./PlaintextBackendClientSession";
 
-export class PlaintextBackend implements Backend {
+export default class PlaintextBackend implements Backend {
   run(
     circuit: Circuit,
     mpcSettings: MpcSettings,

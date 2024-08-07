@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import Protocol from "../src/Protocol";
 import aPlusB from "./circuits/aPlusB";
-import { PlaintextBackend } from "../src/PlaintextBackend/PlaintextBackend";
+import PlaintextBackend from "../src/PlaintextBackend/PlaintextBackend";
 import { EventEmitter } from "ee-typed";
 import assert from "../src/helpers/assert";
 

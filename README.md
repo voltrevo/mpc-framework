@@ -44,7 +44,11 @@ async function main() {
     },
   ];
 
-  const protocol = new mpcf.Protocol(circuit, mpcSettings, mpz);
+  const protocol = new mpcf.Protocol(
+    circuit,
+    mpcSettings,
+    new mpcf.PlaintextBackend(),
+  );
 
   function send(to: string, msg: Uint8Array) {
     // implement sending a message to the specified party
