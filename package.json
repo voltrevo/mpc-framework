@@ -1,6 +1,6 @@
 {
   "name": "mpc-framework",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MPC framework supporting a variety of circuit generators and backends",
   "main": "dist/src/index.js",
   "scripts": {
@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "ee-typed": "^0.1.0",
+    "mpc-framework-common": "^0.1.0",
     "msgpackr": "^1.11.0",
     "zod": "^3.23.8"
   }

@@ -1,5 +1,4 @@
-import Circuit from "./Circuit";
-import { Backend, BackendSession, MpcSettings } from "./Protocol";
+import { Backend, BackendSession, Circuit, MpcSettings } from "mpc-framework-common";
 
 export default class Session {
   backendSession: BackendSession;

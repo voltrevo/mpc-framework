@@ -1,12 +1,11 @@
 import { pack, unpack } from "msgpackr";
 import z from 'zod';
 
-import Circuit from "../Circuit";
 import delay from "../helpers/delay";
-import { BackendSession, MpcSettings } from "../Protocol";
 import defer from "../helpers/defer";
 import evaluate, { u32Arithmetic } from "../helpers/evaluate";
 import errorToString from "../helpers/errorToString";
+import { BackendSession, Circuit, MpcSettings } from "mpc-framework-common";
 
 export default class PlaintextBackendHostSession implements BackendSession {
   outputPromise: Promise<Record<string, unknown>>;

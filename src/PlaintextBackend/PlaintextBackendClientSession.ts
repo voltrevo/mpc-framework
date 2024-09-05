@@ -1,8 +1,7 @@
 import { pack, unpack } from "msgpackr";
-import Circuit from "../Circuit";
 import defer from "../helpers/defer";
-import { BackendSession, MpcSettings } from "../Protocol";
 import { z } from "zod";
+import { BackendSession, Circuit, MpcSettings } from "mpc-framework-common";
 
 export default class PlaintextBackendClientSession implements BackendSession {
   outputReceived = defer<Record<string, unknown>>();

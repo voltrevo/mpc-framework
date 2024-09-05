@@ -1,7 +1,6 @@
-import Circuit from "../Circuit";
-import { Backend, BackendSession, MpcSettings } from "../Protocol";
 import PlaintextBackendHostSession from "./PlaintextBackendHostSession";
 import PlaintextBackendClientSession from "./PlaintextBackendClientSession";
+import { Backend, BackendSession, Circuit, MpcSettings } from "mpc-framework-common";
 
 export default class PlaintextBackend implements Backend {
   run(

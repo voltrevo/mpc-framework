@@ -1,4 +1,4 @@
-import Circuit from "../Circuit";
+import { Circuit } from "mpc-framework-common";
 
 export default function evaluate<T>(
   circuit: Circuit,
