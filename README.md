@@ -2,28 +2,25 @@
 
 MPC framework supporting a variety of circuit generators and backends.
 
-## Status
-
-WIP
+In particular, [`emp-wasm-backend`](https://github.com/voltrevo/emp-wasm-backend) powers secure 2PC based on [*Authenticated Garbling and Efficient Maliciously Secure Two-Party Computation*](https://eprint.iacr.org/2017/030.pdf).
 
 ## Usage
 
 ```sh
-npm install mpc-framework summon-ts
+npm install mpc-framework emp-wasm-backend summon-ts
 ```
 
 ```ts
 import * as mpcf from 'mpc-framework';
+import { EmpWasmBackend } from 'emp-wasm-backend';
 import * as summon from 'summon-ts';
 
 async function main() {
   await summon.init();
 
-  const circuit = summon.compile('/src/main.ts', {
-    // In a real project you should be able to include these as regular files,
-    // but how those files find their way into this format depends on your build
-    // tool.
+  const [aliceComms, bobComms] = makeLocalCommsPair();
 
+  const circuit = summon.compileBoolean('/src/main.ts', 4, {
     '/src/main.ts': `
       export default function main(a: number, b: number) {
         return a + b;
@@ -47,7 +44,7 @@ async function main() {
   const protocol = new mpcf.Protocol(
     circuit,
     mpcSettings,
-    new mpcf.PlaintextBackend(),
+    new EmpWasmBackend(),
   );
 
   function send(to: string, msg: Uint8Array) {
@@ -70,6 +67,8 @@ async function main() {
 
 main().catch(console.error);
 ```
+
+(For a complete version, see [`EmpWasmBackend.test.ts`](./tests/EmpWasmBackend.test.ts).)
 
 ## Example Project
 
