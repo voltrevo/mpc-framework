@@ -19,6 +19,8 @@ async function main() {
   await summon.init();
 
   const circuit = summon.compileBoolean('/src/main.ts', 4, {
+    // Depending on your build tooling, you can write this code in regular files
+    // and benefit from typescript's type checking.
     '/src/main.ts': `
       export default function main(a: number, b: number) {
         return a + b;
@@ -66,7 +68,11 @@ async function main() {
 main().catch(console.error);
 ```
 
-(For a complete version, see [`EmpWasmBackend.test.ts`](./tests/EmpWasmBackend.test.ts).)
+See [MPC Hello](https://voltrevo.github.io/mpc-hello/) for a complete
+example in 250 sloc featuring:
+- Simple frontend
+- P2P end-to-end encrypted communication
+- Circuit code included via ordinary project files
 
 ## Example Projects
 
