@@ -18,8 +18,6 @@ import * as summon from 'summon-ts';
 async function main() {
   await summon.init();
 
-  const [aliceComms, bobComms] = makeLocalCommsPair();
-
   const circuit = summon.compileBoolean('/src/main.ts', 4, {
     '/src/main.ts': `
       export default function main(a: number, b: number) {
@@ -62,7 +60,7 @@ async function main() {
 
   // assume someone else joins as bob and provides { b: 5 }
 
-  console.log(await session.output()); // { main: 8 }
+  console.log(await session.output()); // { main: 5 }
 }
 
 main().catch(console.error);
