@@ -70,6 +70,7 @@ main().catch(console.error);
 
 (For a complete version, see [`EmpWasmBackend.test.ts`](./tests/EmpWasmBackend.test.ts).)
 
-## Example Project
+## Example Projects
 
-TODO
+- [MPC Hello](https://voltrevo.github.io/mpc-hello/)
+- [2PC is for Lovers](https://voltrevo.github.io/2pc-is-for-lovers/)
