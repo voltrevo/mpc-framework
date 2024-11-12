@@ -78,3 +78,4 @@ example in 250 sloc featuring:
 
 - [MPC Hello](https://voltrevo.github.io/mpc-hello/)
 - [2PC is for Lovers](https://voltrevo.github.io/2pc-is-for-lovers/)
+- [MPC Lizard Spock](https://voltrevo.github.io/mpc-lizard-spock/)
