@@ -1,6 +1,6 @@
 {
   "name": "mpc-framework",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "MPC framework supporting a variety of circuit generators and backends",
   "main": "dist/src/index.js",
   "scripts": {
