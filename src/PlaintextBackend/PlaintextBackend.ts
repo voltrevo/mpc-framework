@@ -1,5 +1,5 @@
-import PlaintextBackendHostSession from "./PlaintextBackendHostSession";
-import PlaintextBackendClientSession from "./PlaintextBackendClientSession";
+import PlaintextBackendHostSession from "./PlaintextBackendHostSession.js";
+import PlaintextBackendClientSession from "./PlaintextBackendClientSession.js";
 import { Backend, BackendSession, Circuit, MpcSettings } from "mpc-framework-common";
 
 export default class PlaintextBackend implements Backend {

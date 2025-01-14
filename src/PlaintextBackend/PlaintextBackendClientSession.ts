@@ -1,5 +1,5 @@
 import { pack, unpack } from "msgpackr";
-import defer from "../helpers/defer";
+import defer from "../helpers/defer.js";
 import { z } from "zod";
 import { BackendSession, Circuit, MpcSettings } from "mpc-framework-common";
 
