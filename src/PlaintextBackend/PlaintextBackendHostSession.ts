@@ -1,10 +1,10 @@
 import { pack, unpack } from "msgpackr";
 import z from 'zod';
 
-import delay from "../helpers/delay";
-import defer from "../helpers/defer";
-import evaluate, { u32Arithmetic } from "../helpers/evaluate";
-import errorToString from "../helpers/errorToString";
+import delay from "../helpers/delay.js";
+import defer from "../helpers/defer.js";
+import evaluate, { u32Arithmetic } from "../helpers/evaluate.js";
+import errorToString from "../helpers/errorToString.js";
 import { BackendSession, Circuit, MpcSettings } from "mpc-framework-common";
 
 export default class PlaintextBackendHostSession implements BackendSession {
