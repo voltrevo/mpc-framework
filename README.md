@@ -131,6 +131,7 @@ const mpcSettings = [
     inputs: ['b'],
     outputs: ['main'],
   },
+  // You can have more than 2 parties. We're just keeping it simple here.
 ];
 
 const protocol = new Protocol(circuit, mpcSettings, new EmpWasmBackend());
@@ -173,7 +174,7 @@ For clarity, a complete version of the example above is provided as
 
 | Name | Description | Related Repos |
 | ---- | ----------- | ------------- |
-| [`emp-wasm-backend`](https://github.com/voltrevo/emp-wasm-backend/) | Secure 2PC using authenticated garbling | [`emp-wasm`](https://github.com/voltrevo/emp-wasm), [`emp-ag2pc`](https://github.com/emp-toolkit/emp-ag2pc/) |
+| [`emp-wasm-backend`](https://github.com/voltrevo/emp-wasm-backend/) | Secure MPC using authenticated garbling | [`emp-wasm`](https://github.com/voltrevo/emp-wasm), [`emp-ag2pc`](https://github.com/emp-toolkit/emp-ag2pc/), [`emp-agmpc`](https://github.com/emp-toolkit/emp-agmpc/) |
 | [`mpz-ts`](https://github.com/voltrevo/mpz-ts) | Semi-honest 2PC | [`mpz`](https://github.com/privacy-scaling-explorations/mpz) |
 
 ## Example Projects
