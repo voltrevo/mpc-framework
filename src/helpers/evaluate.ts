@@ -1,4 +1,5 @@
-import { Circuit } from "mpc-framework-common";
+/* eslint-disable camelcase */
+import { Circuit } from 'mpc-framework-common';
 
 export default function evaluate<T>(
   circuit: Circuit,
@@ -56,13 +57,12 @@ export default function evaluate<T>(
 
     const parts = line.split(' ');
     const [inputLen, outputLen] = parts.slice(0, 2).map(Number);
-    
+
     const inputs = parts.slice(2, 2 + inputLen).map(i => wires[Number(i)]);
 
-    const outputIndexes = parts.slice(
-      2 + inputLen,
-      2 + inputLen + outputLen,
-    ).map(Number);
+    const outputIndexes = parts
+      .slice(2 + inputLen, 2 + inputLen + outputLen)
+      .map(Number);
 
     const op = parts[parts.length - 1];
 
@@ -79,10 +79,9 @@ export default function evaluate<T>(
 
   const res: Record<string, T> = {};
 
-  for (
-    const [name, wireIndex] of
-    Object.entries(circuit.info.output_name_to_wire_index)
-  ) {
+  for (const [name, wireIndex] of Object.entries(
+    circuit.info.output_name_to_wire_index,
+  )) {
     res[name] = wires[wireIndex];
   }
 
@@ -102,41 +101,42 @@ export const u32Arithmetic = {
       typeof source === 'boolean' ||
       typeof source === 'string'
     ) {
-      return BigInt(source) % (2n ** 32n);
+      return BigInt(source) % 2n ** 32n;
     }
 
-    throw new Error('Can\'t interpret source as u32');
+    throw new Error("Can't interpret source as u32");
   },
 
+  // eslint-disable-next-line complexity
   combine(op, [a, b]) {
     switch (op) {
-      case "AUnaryAdd": {
+      case 'AUnaryAdd': {
         return [a];
       }
 
-      case "AUnarySub": {
+      case 'AUnarySub': {
         a = -a;
 
         if (a < 0n) {
-          a += 2n ** 32n
+          a += 2n ** 32n;
         }
 
         return [a];
       }
 
-      case "ANot": {
+      case 'ANot': {
         return [a ? 0n : 1n];
       }
 
-      case "ABitNot": {
-        return [~a + (2n ** 32n)]
+      case 'ABitNot': {
+        return [~a + 2n ** 32n];
       }
 
-      case "AAdd": {
-        return [(a + b) % (2n ** 32n)]
+      case 'AAdd': {
+        return [(a + b) % 2n ** 32n];
       }
 
-      case "ASub": {
+      case 'ASub': {
         let res = a - b;
 
         if (res < 0) {
@@ -146,77 +146,77 @@ export const u32Arithmetic = {
         return [res];
       }
 
-      case "AMul": {
-        return [(a * b) % (2n ** 32n)];
+      case 'AMul': {
+        return [(a * b) % 2n ** 32n];
       }
 
-      case "ADiv": {
+      case 'ADiv': {
         return [a / b];
       }
 
-      case "AMod": {
+      case 'AMod': {
         return [a % b];
       }
 
-      case "AExp": {
+      case 'AExp': {
         // Can be done more efficiently
-        return [(a ** b) % (2n ** 32n)];
+        return [a ** b % 2n ** 32n];
       }
 
-      case "AEq": {
+      case 'AEq': {
         return [a === b ? 1n : 0n];
       }
 
-      case "ANeq": {
-        return [a !== b ? 1n : 0n];
+      case 'ANeq': {
+        return [a === b ? 0n : 1n];
       }
 
-      case "ABoolAnd": {
+      case 'ABoolAnd': {
         return [a && b ? 1n : 0n];
       }
 
-      case "ABoolOr": {
+      case 'ABoolOr': {
         return [a || b ? 1n : 0n];
       }
 
-      case "ALt": {
+      case 'ALt': {
         return [a < b ? 1n : 0n];
       }
 
-      case "ALEq": {
+      case 'ALEq': {
         return [a <= b ? 1n : 0n];
       }
 
-      case "AGt": {
+      case 'AGt': {
         return [a > b ? 1n : 0n];
       }
 
-      case "AGEq": {
+      case 'AGEq': {
         return [a >= b ? 1n : 0n];
       }
 
-      case "ABitAnd": {
+      case 'ABitAnd': {
         return [a & b];
       }
 
-      case "ABitOr": {
+      case 'ABitOr': {
         return [a | b];
       }
 
-      case "AXor": {
+      case 'AXor': {
         return [a ^ b];
       }
 
-      case "AShiftL": {
-        return [(a << b) % (2n ** 32n)];
+      case 'AShiftL': {
+        return [(a << b) % 2n ** 32n];
       }
 
-      case "AShiftR": {
+      case 'AShiftR': {
         return [a >> b];
       }
 
       default:
-        throw new Error(`Unrecognized op ${op}`)
+        throw new Error(`Unrecognized op ${op}`);
     }
   },
 } satisfies Arithmetic<bigint>;

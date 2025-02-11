@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 const HasMessage = z.object({
   message: z.string(),

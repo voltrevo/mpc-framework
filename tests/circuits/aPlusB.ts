@@ -1,6 +1,6 @@
 import * as summon from 'summon-ts';
 
-import once from "../../src/helpers/once";
+import once from '../../src/helpers/once';
 
 const aPlusB = once(async () => {
   await summon.init();
@@ -10,7 +10,7 @@ const aPlusB = once(async () => {
       export default function c(a: number, b: number) {
         return a + b;
       }
-    `
+    `,
   });
 });
 

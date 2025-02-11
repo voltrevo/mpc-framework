@@ -1,4 +1,9 @@
-import { Backend, BackendSession, Circuit, MpcSettings } from "mpc-framework-common";
+import {
+  Backend,
+  BackendSession,
+  Circuit,
+  MpcSettings,
+} from 'mpc-framework-common';
 
 export default class Session {
   backendSession: BackendSession;

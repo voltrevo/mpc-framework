@@ -1,7 +1,5 @@
 export default function blockTrim(text: string) {
-  const lines = text.split('\n').map(
-    line => line.trim() === '' ? '' : line,
-  );
+  const lines = text.split('\n').map(line => (line.trim() === '' ? '' : line));
 
   while (lines[0].trim() === '') {
     lines.shift();
@@ -29,7 +27,5 @@ export default function blockTrim(text: string) {
     }
   }
 
-  return lines.map(
-    line => line.slice(minIndent),
-  ).join('\n');
+  return lines.map(line => line.slice(minIndent)).join('\n');
 }

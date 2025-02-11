@@ -7,13 +7,14 @@ your own.
 
 ## What is MPC?
 
-MPC stands for *Multi-Party Computation*. In regular computation, all inputs,
+MPC stands for _Multi-Party Computation_. In regular computation, all inputs,
 outputs, and intermediate calculations are necessarily visible on the device
 performing the computation. MPC, by contrast, allows multiple devices to
 collaborate on a computation while keeping intermediate calculations and others'
 inputs private.
 
 Here's some ways that can be useful:
+
 - Provide analysis on patient data to researchers without revealing the patient data
 - Play [Rock Paper Scissors Lizard Spock](https://voltrevo.github.io/mpc-lizard-spock/) while keeping your move secret
 - Hold an auction while keeping the bids secret (only the winning bidder and price is revealed)
@@ -33,6 +34,7 @@ For a more technical introduction, see [Computerphile's video on Garbled Circuit
 ## Usage Guide
 
 In addition to `mpc-framework`, you will need:
+
 - a circuit generator to turn your MPC program into a circuit (or byo precompiled or handwritten circuit)
 - an mpc-framework backend to do the underlying cryptography
 
@@ -165,17 +167,17 @@ For clarity, a complete version of the example above is provided as
 
 ## **Circuit Generators**
 
-| Name     | Similar to | Related Repos |
-| -------- | ---------- | ------------- |
-| [`summon-ts`](https://github.com/voltrevo/summon-ts/)  | TypeScript | [`summon`](https://github.com/voltrevo/summon/), [`boolify`](https://github.com/voltrevo/boolify/), [`ValueScript`](https://github.com/voltrevo/ValueScript/) |
-| [`circom-2-arithc-ts`](https://github.com/voltrevo/circom-2-arithc-ts/) | Circom | [`circom-2-arithc`](https://github.com/namnc/circom-2-arithc/), [`circom`](https://github.com/iden3/circom/) |
+| Name                                                                    | Similar to | Related Repos                                                                                                                                                 |
+| ----------------------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`summon-ts`](https://github.com/voltrevo/summon-ts/)                   | TypeScript | [`summon`](https://github.com/voltrevo/summon/), [`boolify`](https://github.com/voltrevo/boolify/), [`ValueScript`](https://github.com/voltrevo/ValueScript/) |
+| [`circom-2-arithc-ts`](https://github.com/voltrevo/circom-2-arithc-ts/) | Circom     | [`circom-2-arithc`](https://github.com/namnc/circom-2-arithc/), [`circom`](https://github.com/iden3/circom/)                                                  |
 
 ## **Backends**
 
-| Name | Description | Related Repos |
-| ---- | ----------- | ------------- |
+| Name                                                                | Description                             | Related Repos                                                                                                                                                          |
+| ------------------------------------------------------------------- | --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [`emp-wasm-backend`](https://github.com/voltrevo/emp-wasm-backend/) | Secure MPC using authenticated garbling | [`emp-wasm`](https://github.com/voltrevo/emp-wasm), [`emp-ag2pc`](https://github.com/emp-toolkit/emp-ag2pc/), [`emp-agmpc`](https://github.com/emp-toolkit/emp-agmpc/) |
-| [`mpz-ts`](https://github.com/voltrevo/mpz-ts) | Semi-honest 2PC | [`mpz`](https://github.com/privacy-scaling-explorations/mpz) |
+| [`mpz-ts`](https://github.com/voltrevo/mpz-ts)                      | Semi-honest 2PC                         | [`mpz`](https://github.com/privacy-scaling-explorations/mpz)                                                                                                           |
 
 ## Example Projects
 

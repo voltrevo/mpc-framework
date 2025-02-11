@@ -1,5 +1,5 @@
-import { Backend, Circuit, MpcSettings } from "mpc-framework-common";
-import Session from "./Session.js";
+import { Backend, Circuit, MpcSettings } from 'mpc-framework-common';
+import Session from './Session.js';
 
 export default class Protocol {
   constructor(
