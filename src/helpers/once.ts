@@ -1,9 +1,5 @@
 export default function once<T>(f: () => T): () => T {
-  let result: (
-    | undefined
-    | { error: unknown }
-    | { value: T }
-  ) = undefined;
+  let result: undefined | { error: unknown } | { value: T };
 
   return () => {
     if (!result) {

@@ -1,6 +1,11 @@
-import PlaintextBackendHostSession from "./PlaintextBackendHostSession.js";
-import PlaintextBackendClientSession from "./PlaintextBackendClientSession.js";
-import { Backend, BackendSession, Circuit, MpcSettings } from "mpc-framework-common";
+import PlaintextBackendHostSession from './PlaintextBackendHostSession.js';
+import PlaintextBackendClientSession from './PlaintextBackendClientSession.js';
+import {
+  Backend,
+  BackendSession,
+  Circuit,
+  MpcSettings,
+} from 'mpc-framework-common';
 
 export default class PlaintextBackend implements Backend {
   run(
@@ -10,7 +15,7 @@ export default class PlaintextBackend implements Backend {
     input: Record<string, unknown>,
     send: (to: string, msg: Uint8Array) => void,
   ): BackendSession {
-    const hostName = mpcSettings[0].name ?? "0";
+    const hostName = mpcSettings[0].name ?? '0';
 
     if (name === hostName) {
       return new PlaintextBackendHostSession(

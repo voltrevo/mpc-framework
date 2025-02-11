@@ -1,11 +1,11 @@
-import { pack, unpack } from "msgpackr";
+import { pack, unpack } from 'msgpackr';
 import z from 'zod';
 
-import delay from "../helpers/delay.js";
-import defer from "../helpers/defer.js";
-import evaluate, { u32Arithmetic } from "../helpers/evaluate.js";
-import errorToString from "../helpers/errorToString.js";
-import { BackendSession, Circuit, MpcSettings } from "mpc-framework-common";
+import delay from '../helpers/delay.js';
+import defer from '../helpers/defer.js';
+import evaluate, { u32Arithmetic } from '../helpers/evaluate.js';
+import errorToString from '../helpers/errorToString.js';
+import { BackendSession, Circuit, MpcSettings } from 'mpc-framework-common';
 
 export default class PlaintextBackendHostSession implements BackendSession {
   outputPromise: Promise<Record<string, unknown>>;
@@ -28,6 +28,7 @@ export default class PlaintextBackendHostSession implements BackendSession {
     let shouldPing = true;
 
     (async () => {
+      // eslint-disable-next-line no-unmodified-loop-condition
       while (shouldPing) {
         for (let i = 1; i < this.mpcSettings.length; i++) {
           const to = this.mpcSettings[i].name ?? i.toString();
@@ -50,7 +51,7 @@ export default class PlaintextBackendHostSession implements BackendSession {
     let selfResult: Record<string, unknown> = {};
 
     for (let i = 0; i < this.mpcSettings.length; i++) {
-      const {name = i.toString(), outputs} = this.mpcSettings[i];
+      const { name = i.toString(), outputs } = this.mpcSettings[i];
       const result: Record<string, unknown> = {};
 
       for (const outputName of outputs) {

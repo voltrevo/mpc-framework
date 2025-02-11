@@ -6,7 +6,10 @@
   "main": "dist/src/index.js",
   "scripts": {
     "build": "rm -rf dist && tsc",
-    "test": "mocha --import=tsx tests/**/*.test.ts"
+    "test": "mocha --import=tsx tests/**/*.test.ts",
+    "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0",
+    "format": "prettier -c .",
+    "format:fix": "prettier -w ."
   },
   "keywords": [
     "MPC",
@@ -26,6 +29,15 @@
     "@types/chai": "^4.3.17",
     "@types/mocha": "^10.0.7",
     "chai": "^5.1.1",
+    "@typescript-eslint/eslint-plugin": "^7.2.0",
+    "@typescript-eslint/parser": "^7.2.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-config-xo": "^0.44.0",
+    "eslint-plugin-prettier": "^5.2.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "prettier": "^3.4.2",
     "emp-wasm-backend": "^0.2.1",
     "mocha": "^10.7.0",
     "summon-ts": "^0.2.5",

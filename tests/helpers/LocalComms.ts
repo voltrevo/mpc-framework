@@ -20,7 +20,9 @@ export function makeLocalCommsPair(): [LocalComms, LocalComms] {
   return [a, b];
 }
 
-export class LocalCommsBuf extends EventEmitter<{ data(data: Uint8Array): void }> {
+export class LocalCommsBuf extends EventEmitter<{
+  data(data: Uint8Array): void;
+}> {
   buf = new Uint8Array(1024);
   bufLen = 0;
 
