@@ -88,7 +88,7 @@ import * as summon from 'summon-ts';
 
 await summon.init();
 
-const circuit = summon.compileBoolean(
+const { circuit } = summon.compileBoolean(
   // Specify the entry point, similar to the `main` field of package.json
   'circuit/main.ts',
 
