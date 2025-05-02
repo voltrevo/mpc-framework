@@ -16,7 +16,7 @@ inputs private.
 Here's some ways that can be useful:
 
 - Provide analysis on patient data to researchers without revealing the patient data
-- Play [Rock Paper Scissors Lizard Spock](https://voltrevo.github.io/mpc-lizard-spock/) while keeping your move secret
+- Play [Rock Paper Scissors Lizard Spock](https://mpc.pse.dev/apps/lizard-spock) while keeping your move secret
 - Hold an auction while keeping the bids secret (only the winning bidder and price is revealed)
 - [Match employers and job-seekers that each have hidden criteria](https://github.com/cursive-team/pz-hiring)
 - Arrange optimal asset swaps (eg sports players / trading cards / corporate assets / NFTs) using hidden valuations
@@ -27,7 +27,7 @@ Here's some ways that can be useful:
 For a bit more of an introduction to MPC, I recommend Barry Whitehat's talk
 [2PC is for Lovers](https://www.youtube.com/watch?v=PzcDqegGoKI). The
 lovers' app described in the talk has been implemented using mpc-framework
-[here](https://voltrevo.github.io/2pc-is-for-lovers/).
+[here](https://mpc.pse.dev/apps/2pc-is-for-lovers).
 
 For a more technical introduction, see [Computerphile's video on Garbled Circuits](https://www.youtube.com/watch?v=FMZ-HARN0gI). For a deeper dive: [Pragmatic MPC](https://securecomputation.org/).
 
@@ -105,7 +105,7 @@ const { circuit } = summon.compileBoolean(
       // Include code from step 1
       // This can be inlined or you can use build tools to just include a
       // directory from your source tree
-      // (eg https://github.com/voltrevo/mpc-hello/)
+      // (eg https://github.com/privacy-scaling-explorations/mpc-hello/tree/main/client-client)
     `,
     // Other files can be specified here
   },
@@ -163,7 +163,7 @@ console.log(await session.output()); // { main: 5 }
 ### Bringing it all Together
 
 For clarity, a complete version of the example above is provided as
-[mpc-hello](https://voltrevo.github.io/mpc-hello/).
+[mpc-hello](https://mpc.pse.dev/apps/hello).
 
 ## **Circuit Generators**
 
@@ -181,6 +181,6 @@ For clarity, a complete version of the example above is provided as
 
 ## Example Projects
 
-- [MPC Hello](https://voltrevo.github.io/mpc-hello/)
-- [2PC is for Lovers](https://voltrevo.github.io/2pc-is-for-lovers/)
-- [MPC Lizard Spock](https://voltrevo.github.io/mpc-lizard-spock/)
+- [MPC Hello](https://mpc.pse.dev/apps/hello)
+- [2PC is for Lovers](https://mpc.pse.dev/apps/2pc-is-for-lovers)
+- [MPC Lizard Spock](https://mpc.pse.dev/apps/lizard-spock)
