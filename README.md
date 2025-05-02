@@ -105,7 +105,7 @@ const { circuit } = summon.compileBoolean(
       // Include code from step 1
       // This can be inlined or you can use build tools to just include a
       // directory from your source tree
-      // (eg https://mpc.pse.dev/apps/hello)
+      // (eg https://github.com/privacy-scaling-explorations/mpc-hello/tree/main/client-client)
     `,
     // Other files can be specified here
   },
