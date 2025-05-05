@@ -2,7 +2,7 @@
 
 A framework that makes MPC easy in TypeScript.
 
-Choose from multiple existing circuit generators and MPC backends, or create
+Choose from multiple existing circuit generators and MPC engines, or create
 your own.
 
 ## What is MPC?
@@ -36,12 +36,12 @@ For a more technical introduction, see [Computerphile's video on Garbled Circuit
 In addition to `mpc-framework`, you will need:
 
 - a circuit generator to turn your MPC program into a circuit (or byo precompiled or handwritten circuit)
-- an mpc-framework backend to do the underlying cryptography
+- an mpc-framework engine to do the underlying cryptography
 
 ```sh
 npm install mpc-framework
 npm install summon-ts         # circuit generator
-npm install emp-wasm-backend  # backend
+npm install emp-wasm-engine   # engine
 ```
 
 ### Step 1: Create a Circuit
@@ -51,13 +51,19 @@ circuit. This is a special simplified program in the form of a fixed tree
 specifying how to combine values together. Regular programs allow the CPU to
 branch into different code paths, and circuits can't do that. It's possible to
 write these circuits by hand (or using third party tools), but you might find it
-easier to use [summon](https://github.com/voltrevo/summon/):
+easier to use [summon](https://github.com/privacy-scaling-explorations/summon/):
 
 ```ts
 // This isn't exactly TypeScript, but it uses the same syntax and has enough in
 // common that you can use the .ts extension and get useful intellisense
 
-export default function main(a: number, b: number) {
+export default (io: Summon.IO) => {
+  // Alice provides a number called 'a'
+  const a = io.input('alice', 'a', summon.number());
+
+  // Bob provides a number called 'b'
+  const b = io.input('bob', 'b', summon.number());
+
   let result;
 
   // This seems like a branch that I just said is not allowed, but this is just
@@ -69,7 +75,8 @@ export default function main(a: number, b: number) {
     result = b;
   }
 
-  return result;
+  // Everyone gets an output called 'result'
+  io.outputPublic('result', result);
 }
 
 // We could inline this, but we're just demonstrating that summon supports
@@ -88,19 +95,19 @@ import * as summon from 'summon-ts';
 
 await summon.init();
 
-const { circuit } = summon.compileBoolean(
+const { circuit } = summon.compile({
   // Specify the entry point, similar to the `main` field of package.json
-  'circuit/main.ts',
+  path: 'circuit/main.ts',
 
   // This is the bit width of numbers in your summon program. You can use any
   // width you like, but all numbers in the program will be the same. You can
   // achieve smaller bit widths within the program using masking (the unused
   // gates will be optimized away). It's also possible to define classes for
   // matrices/floats/etc.
-  16,
+  boolifyWidth: 8,
 
   // File tree to compile
-  {
+  files: {
     'circuit/main.ts': `
       // Include code from step 1
       // This can be inlined or you can use build tools to just include a
@@ -109,34 +116,18 @@ const { circuit } = summon.compileBoolean(
     `,
     // Other files can be specified here
   },
-);
+});
 ```
 
 ### Step 3: Set up your Protocol
 
 ```ts
 import { Protocol } from 'mpc-framework';
-import { EmpWasmBackend } from 'emp-wasm-backend';
+import { EmpWasmEngine } from 'emp-wasm-engine';
 
 // ...
 
-// Specify who provides each input, and who receives each output
-// (Our chosen backend currently requires that everyone gets all outputs)
-const mpcSettings = [
-  {
-    name: 'alice',
-    inputs: ['a'],
-    outputs: ['main'],
-  },
-  {
-    name: 'bob',
-    inputs: ['b'],
-    outputs: ['main'],
-  },
-  // You can have more than 2 parties. We're just keeping it simple here.
-];
-
-const protocol = new Protocol(circuit, mpcSettings, new EmpWasmBackend());
+const protocol = new Protocol(circuit, new EmpWasmEngine());
 ```
 
 ### Step 4: Run the Protocol
@@ -169,15 +160,15 @@ For clarity, a complete version of the example above is provided as
 
 | Name                                                                    | Similar to | Related Repos                                                                                                                                                 |
 | ----------------------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`summon-ts`](https://github.com/voltrevo/summon-ts/)                   | TypeScript | [`summon`](https://github.com/voltrevo/summon/), [`boolify`](https://github.com/voltrevo/boolify/), [`ValueScript`](https://github.com/voltrevo/ValueScript/) |
-| [`circom-2-arithc-ts`](https://github.com/voltrevo/circom-2-arithc-ts/) | Circom     | [`circom-2-arithc`](https://github.com/namnc/circom-2-arithc/), [`circom`](https://github.com/iden3/circom/)                                                  |
+| [`summon-ts`](https://github.com/privacy-scaling-explorations/summon-ts/)                   | TypeScript | [`summon`](https://github.com/privacy-scaling-explorations/summon/), [`boolify`](https://github.com/privacy-scaling-explorations/boolify/), [`ValueScript`](https://github.com/voltrevo/ValueScript/) |
+| [`circom-2-arithc-ts`](https://github.com/privacy-scaling-explorations/circom-2-arithc-ts/) | Circom     | [`circom-2-arithc`](https://github.com/namnc/circom-2-arithc/), [`circom`](https://github.com/iden3/circom/)                                                  |
 
-## **Backends**
+## **Engines**
 
 | Name                                                                | Description                             | Related Repos                                                                                                                                                          |
 | ------------------------------------------------------------------- | --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`emp-wasm-backend`](https://github.com/voltrevo/emp-wasm-backend/) | Secure MPC using authenticated garbling | [`emp-wasm`](https://github.com/voltrevo/emp-wasm), [`emp-ag2pc`](https://github.com/emp-toolkit/emp-ag2pc/), [`emp-agmpc`](https://github.com/emp-toolkit/emp-agmpc/) |
-| [`mpz-ts`](https://github.com/voltrevo/mpz-ts)                      | Semi-honest 2PC                         | [`mpz`](https://github.com/privacy-scaling-explorations/mpz)                                                                                                           |
+| [`emp-wasm-engine`](https://github.com/privacy-scaling-explorations/emp-wasm-engine/) | Secure MPC using authenticated garbling | [`emp-wasm`](https://github.com/privacy-scaling-explorations/emp-wasm), [`emp-ag2pc`](https://github.com/emp-toolkit/emp-ag2pc/), [`emp-agmpc`](https://github.com/emp-toolkit/emp-agmpc/) |
+| [`mpz-ts`](https://github.com/privacy-scaling-explorations/mpz-ts)                      | Semi-honest 2PC                         | [`mpz`](https://github.com/privacy-scaling-explorations/mpz)                                                                                                           |
 
 ## Example Projects
 

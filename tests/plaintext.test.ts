@@ -1,28 +1,13 @@
 import { expect } from 'chai';
 import Protocol from '../src/Protocol';
 import aPlusB from './circuits/aPlusB';
-import PlaintextBackend from '../src/PlaintextBackend/PlaintextBackend';
+import PlaintextEngine from '../src/PlaintextEngine/PlaintextEngine';
 import { EventEmitter } from 'ee-typed';
 import assert from '../src/helpers/assert';
 
 describe('plaintext', () => {
   it('3 + 5', async () => {
-    const protocol = new Protocol(
-      await aPlusB(),
-      [
-        {
-          name: 'alice',
-          inputs: ['a'],
-          outputs: ['c'],
-        },
-        {
-          name: 'bob',
-          inputs: ['b'],
-          outputs: ['c'],
-        },
-      ],
-      new PlaintextBackend(),
-    );
+    const protocol = new Protocol(await aPlusB(), new PlaintextEngine());
 
     const messageEvents = new EventEmitter<{
       aliceToBob(msg: Uint8Array): void;

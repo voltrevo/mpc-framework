@@ -1,11 +1,10 @@
-import { Backend, Circuit, MpcSettings } from 'mpc-framework-common';
+import { Engine, Circuit } from 'mpc-framework-common';
 import Session from './Session.js';
 
 export default class Protocol {
   constructor(
     public circuit: Circuit,
-    public mpcSettings: MpcSettings,
-    public backend: Backend,
+    public engine: Engine,
   ) {}
 
   join(
@@ -13,13 +12,6 @@ export default class Protocol {
     input: Record<string, unknown>,
     send: (to: string, msg: Uint8Array) => void,
   ): Session {
-    return new Session(
-      this.circuit,
-      this.mpcSettings,
-      this.backend,
-      name,
-      input,
-      send,
-    );
+    return new Session(this.circuit, this.engine, name, input, send);
   }
 }

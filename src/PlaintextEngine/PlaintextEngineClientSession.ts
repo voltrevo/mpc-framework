@@ -1,15 +1,14 @@
 import { pack, unpack } from 'msgpackr';
 import defer from '../helpers/defer.js';
 import { z } from 'zod';
-import { BackendSession, Circuit, MpcSettings } from 'mpc-framework-common';
+import { EngineSession, Circuit } from 'mpc-framework-common';
 
-export default class PlaintextBackendClientSession implements BackendSession {
+export default class PlaintextEngineClientSession implements EngineSession {
   outputReceived = defer<Record<string, unknown>>();
   inputsSent = false;
 
   constructor(
     public circuit: Circuit,
-    public mpcSettings: MpcSettings,
     public name: string,
     public input: Record<string, unknown>,
     public send: (to: string, msg: Uint8Array) => void,

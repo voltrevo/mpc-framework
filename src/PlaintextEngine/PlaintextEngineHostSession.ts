@@ -5,9 +5,9 @@ import delay from '../helpers/delay.js';
 import defer from '../helpers/defer.js';
 import evaluate, { u32Arithmetic } from '../helpers/evaluate.js';
 import errorToString from '../helpers/errorToString.js';
-import { BackendSession, Circuit, MpcSettings } from 'mpc-framework-common';
+import { EngineSession, Circuit } from 'mpc-framework-common';
 
-export default class PlaintextBackendHostSession implements BackendSession {
+export default class PlaintextEngineHostSession implements EngineSession {
   outputPromise: Promise<Record<string, unknown>>;
   combinedInputs = defer<Record<string, unknown>>();
   partialCombinedInputs: Record<string, unknown>;
@@ -15,7 +15,6 @@ export default class PlaintextBackendHostSession implements BackendSession {
 
   constructor(
     public circuit: Circuit,
-    public mpcSettings: MpcSettings,
     public name: string,
     public input: Record<string, unknown>,
     public send: (to: string, msg: Uint8Array) => void,
@@ -30,8 +29,8 @@ export default class PlaintextBackendHostSession implements BackendSession {
     (async () => {
       // eslint-disable-next-line no-unmodified-loop-condition
       while (shouldPing) {
-        for (let i = 1; i < this.mpcSettings.length; i++) {
-          const to = this.mpcSettings[i].name ?? i.toString();
+        for (let i = 1; i < this.circuit.mpcSettings.length; i++) {
+          const to = this.circuit.mpcSettings[i].name ?? i.toString();
           this.send(to, pack('ping'));
         }
 
@@ -50,8 +49,8 @@ export default class PlaintextBackendHostSession implements BackendSession {
     const fullResult = evaluate(this.circuit, combinedInputs, u32Arithmetic);
     let selfResult: Record<string, unknown> = {};
 
-    for (let i = 0; i < this.mpcSettings.length; i++) {
-      const { name = i.toString(), outputs } = this.mpcSettings[i];
+    for (let i = 0; i < this.circuit.mpcSettings.length; i++) {
+      const { name = i.toString(), outputs } = this.circuit.mpcSettings[i];
       const result: Record<string, unknown> = {};
 
       for (const outputName of outputs) {
@@ -74,7 +73,7 @@ export default class PlaintextBackendHostSession implements BackendSession {
         throw new Error('Already received');
       }
 
-      const peerInfo = this.mpcSettings.find(
+      const peerInfo = this.circuit.mpcSettings.find(
         (s, i) => from === (s.name ?? i.toString()),
       );
 
@@ -94,7 +93,10 @@ export default class PlaintextBackendHostSession implements BackendSession {
 
       this.peerInputsReceived.add(from);
 
-      if (this.peerInputsReceived.size === this.mpcSettings.length - 1) {
+      if (
+        this.peerInputsReceived.size ===
+        this.circuit.mpcSettings.length - 1
+      ) {
         this.combinedInputs.resolve(this.partialCombinedInputs);
       }
     } catch (e) {

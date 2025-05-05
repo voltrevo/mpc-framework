@@ -1,6 +1,6 @@
 {
   "name": "mpc-framework",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "MPC framework supporting a variety of circuit generators and backends",
   "type": "module",
   "main": "dist/src/index.js",
@@ -40,13 +40,13 @@
     "prettier": "^3.4.2",
     "emp-wasm-backend": "^0.2.1",
     "mocha": "^10.7.0",
-    "summon-ts": "^0.2.5",
+    "summon-ts": "^0.6.0",
     "tsx": "^4.16.5",
     "typescript": "^5.4.5"
   },
   "dependencies": {
     "ee-typed": "^0.1.1",
-    "mpc-framework-common": "^0.1.1",
+    "mpc-framework-common": "^0.3.0",
     "msgpackr": "^1.11.0",
     "zod": "^3.23.8"
   }
