@@ -5,13 +5,21 @@ import once from '../../src/helpers/once';
 const aPlusB = once(async () => {
   await summon.init();
 
-  return summon.compile('/src/main.ts', {
-    '/src/main.ts': `
-      export default function c(a: number, b: number) {
-        return a + b;
-      }
-    `,
+  const { circuit } = summon.compile({
+    path: '/src/main.ts',
+    files: {
+      '/src/main.ts': `
+        export default (io: Summon.IO) => {
+          const a = io.input('alice', 'a', summon.number());
+          const b = io.input('bob', 'b', summon.number());
+
+          io.outputPublic('c', a + b);
+        }
+      `,
+    },
   });
+
+  return circuit;
 });
 
 export default aPlusB;

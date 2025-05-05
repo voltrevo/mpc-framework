@@ -1,29 +1,23 @@
-import {
-  Backend,
-  BackendSession,
-  Circuit,
-  MpcSettings,
-} from 'mpc-framework-common';
+import { Engine, EngineSession, Circuit } from 'mpc-framework-common';
 
 export default class Session {
-  backendSession: BackendSession;
+  engineSession: EngineSession;
 
   constructor(
     public circuit: Circuit,
-    public mpcSettings: MpcSettings,
-    public backend: Backend,
+    public engine: Engine,
     public name: string,
     public input: Record<string, unknown>,
     public send: (to: string, msg: Uint8Array) => void,
   ) {
-    this.backendSession = backend.run(circuit, mpcSettings, name, input, send);
+    this.engineSession = engine.run(circuit, name, input, send);
   }
 
   handleMessage(from: string, msg: Uint8Array) {
-    this.backendSession.handleMessage(from, msg);
+    this.engineSession.handleMessage(from, msg);
   }
 
   async output(): Promise<Record<string, unknown>> {
-    return await this.backendSession.output();
+    return await this.engineSession.output();
   }
 }

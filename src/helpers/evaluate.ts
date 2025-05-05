@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { Circuit } from 'mpc-framework-common';
 
 export default function evaluate<T>(
@@ -15,25 +14,23 @@ export default function evaluate<T>(
 
   const wires = new Array<T>(wireCount).fill(arithmetic.init(0));
 
-  for (const { value, wire_index } of Object.values(circuit.info.constants)) {
-    wires[wire_index] = arithmetic.init(value);
+  for (const { value, address } of circuit.info.constants) {
+    wires[address] = arithmetic.init(value);
   }
 
-  if (
-    Object.keys(inputs).length !==
-    Object.keys(circuit.info.input_name_to_wire_index).length
-  ) {
+  if (Object.keys(inputs).length !== circuit.info.inputs.length) {
     throw new Error('Mismatch between input len and required input len');
   }
 
   for (const [name, value] of Object.entries(inputs)) {
-    const wireIndex = circuit.info.input_name_to_wire_index[name];
+    const inputInfo = circuit.info.inputs.find(i => i.name === name);
+    const address = inputInfo?.address;
 
-    if (wireIndex === undefined) {
+    if (address === undefined) {
       throw new Error(`Couldn't map input ${name} to a wire`);
     }
 
-    wires[wireIndex] = arithmetic.init(value);
+    wires[address] = arithmetic.init(value);
   }
 
   let i = 1;
@@ -79,10 +76,8 @@ export default function evaluate<T>(
 
   const res: Record<string, T> = {};
 
-  for (const [name, wireIndex] of Object.entries(
-    circuit.info.output_name_to_wire_index,
-  )) {
-    res[name] = wires[wireIndex];
+  for (const { name, address } of circuit.info.outputs) {
+    res[name] = wires[address];
   }
 
   return res;
